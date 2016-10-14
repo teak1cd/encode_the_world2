@@ -57,104 +57,6 @@
             }
             window.onload = load;
         </script>
-        <script>
-        var ballx = 400;
-var bally = 500;//Math.random()*8-4;
-var motionx = 8;
-var motiony = Math.min(Math.max((Math.random()*8-4)*1000, 4), -4);
-var error = 0;
-var rep = true;
-var ball;
-var paddle1;
-var paddle2;
-var p1x = 100;
-var p1y = 0;
-var p2x = screen.width-200;
-var p2y = 0;
-var mx = 0;
-var score = {"p1":0,"p2":0}
-document.body.addEventListener('mousemove', function(e) {
-    mx=e.screenY;
-}, false);
-function start(){
-  try{
-    ball.close();
-  }catch(e){}
-  try{
-    paddle1.close();
-  }catch(e){}
-  try{
-    paddle2.close();
-  }catch(e){}
-  ball = window.open("ball","","width=100,height=100");
-  ball.moveTo(screen.availWidth/2,screen.availWidth/2);
-  ball.window.document.body.style.backgroundColor = "#FF0000";
-  paddle1 = window.open("paddle","","width=100,height=300");
-  paddle2 = window.open("paddle2","","width=100,height=300");
-  paddle1.moveTo(100,0);
-  paddle1.window.document.body.style.backgroundColor = "rgb(200,200,200)";
-  paddle2.moveTo(screen.width-200,0);
-  paddle2.window.document.body.style.backgroundColor = "rgb(200,200,200)";
-  loop();
-  return rep;
-}
-function loop(){
-  window.focus();
-  if(rep){
-  window.requestAnimationFrame(loop);
-  }
-  try{
-  paddle1.moveTo(p1x,mx);
-  p1y=mx;
-  ballx+=motionx;
-  bally+=motiony;
-  if(ballx<0){
-    score.p2++;
-    ballx = screen.availWidth/2;
-    bally = screen.availHeight/2;
-    console.log("score");
-    motionx = 8;
-    motiony = Math.min(Math.max((Math.random()*8-4)*1000, 4), -4);
-    console.log("p1:"+score.p1,"p2:"+score.p2);
-  }
-  if(ballx>screen.availWidth-130){
-    score.p1++;
-    ballx = screen.availWidth/2;
-    bally = screen.availHeight/2;
-    console.log("score");
-    motionx = 8;
-    motiony = Math.min(Math.max((Math.random()*8-4)*1000, 4), -4);
-    console.log("p1:"+score.p1,"p2:"+score.p2);
-  }
-  if(bally<0)motiony*=-1;
-  if(bally>screen.availHeight-100)motiony=-1;
-  if(bally-150>p2y){
-    p2y+=20;
-  }else{
-    p2y-=20;
-  }
-  ball.moveTo(ballx,bally);
-  paddle2.moveTo(screen.width-200,p2y);
-  if(bally>p2y && bally<p2y+300 && ballx+130>p2x){
-    motionx*=-1;
-    var dif = (bally-p2y-150);
-    motiony=dif/15;
-  }
-  if(bally>p1y && bally<p1y+300 && ballx<p1x+130){
-    motionx*=-1;
-    var dif = (bally-p1y-150);
-    motiony=dif/15;
-  }
-  if(error > 0)error--;
-  }catch(e){
-    error++;
-    if(error > 10){
-      rep = false;
-      error = 0;
-    }
-  }
-}
-        </script>
     </head>
 
     <body>
@@ -272,6 +174,5 @@ function loop(){
                     <a href="//jsbin.com/genuyad/edit?output">jsbin: Decoder template</a>
                 </th>
         </table>
-        <button onClick='start();' > start</button>
     </body>
 </html>
